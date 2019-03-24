@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>注册</title>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+	<header class="am-topbar">
+		<h1 class="am-topbar-brand">注册账号</h1>
+		<!-- <form
+			class="am-topbar-form am-topbar-left am-form-inline am-topbar-right">
+			<button class="am-btn am-btn-default am-btn-sm">
+				<a href="Login.html">登录</a>
+			</button>
+		</form> -->
+	</header>
+	
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<form id="form1" onsubmit="return false" action="##" method="post"
+				class="am-form">
+
+				<div class="am-input-group am-radius am-animation-slide-left">
+					<input type="text" id="username" name="username" class="am-radius"
+						data-validation-message="账号" placeholder="账号" required /> <span
+						class="am-input-group-label log-icon am-radius"><i
+						class="am-icon-user am-icon-sm am-icon-fw"></i></span>
+				</div>
+				<br />
+				<div
+					class="am-input-group am-animation-slide-left log-animation-delay">
+					<input type="password" class="am-form-field am-radius log-input"
+						id="password" name="password" placeholder="密码" minlength="5"
+						required> <span
+						class="am-input-group-label log-icon am-radius"><i
+						class="am-icon-lock am-icon-sm am-icon-fw"></i></span>
+				</div>
+				<br>
+				<div
+					class="am-input-group am-animation-slide-left log-animation-delay">
+					<input type="password" class="am-form-field am-radius log-input"
+						id="check" name="check" placeholder="确认密码" minlength="5" required>
+					<span class="am-input-group-label log-icon am-radius"><i
+						class="am-icon-lock am-icon-sm am-icon-fw"></i></span>
+				</div>
+				<br>
+				<div class="am-input-group am-radius am-animation-slide-left">
+					<input type="text" id="phone" name="phone" class="am-radius"
+						data-validation-message="手机号" placeholder="手机号" required /> <span
+						class="am-input-group-label log-icon am-radius"><i
+						class="am-icon-user am-icon-sm am-icon-fw"></i></span>
+				</div>
+				<br>
+				<button type="submit"
+					class="am-btn am-btn-primary am-btn-block am-btn-lg am-radius am-animation-slide-bottom log-animation-delay"
+					onclick="sub()">注册</button>
+			</form>
+			<script type="text/javascript">
+				/*function getFileUrl(sourceId) {
+					var url;
+					if (navigator.userAgent.indexOf("MSIE") >= 1) { // IE 
+						url = document.getElementById(sourceId).value;
+					} else if (navigator.userAgent.indexOf("Firefox") > 0) { // Firefox 
+						url = window.URL.createObjectURL(document
+								.getElementById(sourceId).files.item(0));
+					} else if (navigator.userAgent.indexOf("Chrome") > 0) { // Chrome 
+						url = window.URL.createObjectURL(document
+								.getElementById(sourceId).files.item(0));
+					}
+					name = document.getElementById(sourceId).value;
+					file = document.getElementById(sourceId).files.item(0);
+					return url;
+				}*/
+				function sub() {
+					var Name = document.getElementById("username");
+					var Phone = document.getElementById("phone");
+					var Password = document.getElementById("password");
+					var Check = document.getElementById("check");
+					 //var yz = document.getElementById("yanzheng").value;
+					//var position = " ";
+					name = Name.value;
+					pass = Password.value;
+					conf = Check.value;
+					pass = Password.value;
+					//if (yz == yanzheng) {
+						if (pass != conf) {
+							alert("两次输入的密码不同");
+						} else {
+							//alert(Phone.value);
+							if (!(/^1[34578]\d{9}$/.test(Phone))) {
+								//if (position.value == "众包工人") {
+								$.ajax({
+									//几个参数需要注意一下
+									type : "POST",//方法类型
+									dataType : "json",//服务端接收的数据类型
+									url : "CustomerRegisterServlet",//url
+									data : {
+										"username" : name,
+										"password" : pass,
+										"phone" : Phone.value
+									},
+									success : function(result) {
+										console.log(result);//打印服务端返回的数据
+										var jo = eval(result);
+										if (jo.data.startsWith("c")) {
+											alert("注册成功!");
+
+											/*var url = encodeURI("Login.html?"
+													+ "~" + Name.value + "~"
+													+ Password.value + "~"
+													+ Phone.value + "~"
+													+ jo.data);
+											window.location.href = url;*/
+
+										} else {
+											alert(jo.data);
+										}
+										;
+									},
+									error : function() {
+										alert("异常！");
+									}
+								});
+								//}
+							}
+						}
+					//}//
+				}
+			</script>
+			<hr>
+		</div>
+	</div>
+</body>
+</html>
